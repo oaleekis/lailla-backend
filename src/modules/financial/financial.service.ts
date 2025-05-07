@@ -49,6 +49,10 @@ export class FinancialService {
       searchParams.title = Like(`%${params.title}%`);
     }
 
+    if(params.date) {
+      searchParams.date = Like(`%${params.date}%`);
+    }
+
     searchParams.userId = params.userId;
 
     const page = params.page || 1;
@@ -100,7 +104,7 @@ export class FinancialService {
     }
   }
 
-  async totalLastMonth(userId: string): Promise<number> {
+  async getTotalBalanceLastMonth(userId: string): Promise<number> {
     const today = new Date();
     const lastMonth = new Date();
     lastMonth.setMonth(lastMonth.getMonth() - 1);
@@ -121,6 +125,42 @@ export class FinancialService {
     }, 0);
 
     return total;
+  }
+
+  async getTotalRevenuesLastMonth(userId: string): Promise<number> {
+    const today = new Date();
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+    const revenues = await this.financialRepository.find({
+      where: {
+        userId,
+        type: PaymentTypeEnum.RECEITA,
+        date: Between(lastMonth.toISOString(), today.toISOString()),
+      }
+    });
+
+    const totalRevenues = revenues.reduce((acc, receita) => acc + Number(receita.value), 0);
+
+    return totalRevenues;
+  }
+
+  async getTotalExpensesLastMonth(userId: string): Promise<number> {
+    const today = new Date();
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+    const expenses = await this.financialRepository.find({
+      where: {
+        userId,
+        type: PaymentTypeEnum.DESPESA,
+        date: Between(lastMonth.toISOString(), today.toISOString()),
+      }
+    });
+
+    const totalExpenses = expenses.reduce((acc, despesa) => acc + Number(despesa.value), 0);
+
+    return totalExpenses;
   }
 
   private mapEntityToDto(financialEntity: FinancialEntity): CreateFinancialDto {

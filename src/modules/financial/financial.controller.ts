@@ -38,9 +38,21 @@ export class FinancialController {
     return this.financialService.remove(id, userId);
   }
 
-  @Get('/last-month')
-  async totalLastMonth(@Request() req): Promise<number> {
+  @Get('/total')
+  async getTotalBalanceLastMonth(@Request() req): Promise<number> {
     const userId = req.user.sub;
-    return this.financialService.totalLastMonth(userId);
+    return this.financialService.getTotalBalanceLastMonth(userId);
+  }
+
+  @Get('/revenues')
+  async getTotalRevenuesLastMonth(@Request() req): Promise<number> {
+    const userId = req.user.sub;
+    return this.financialService.getTotalRevenuesLastMonth(userId);
+  }
+
+  @Get('/expenses')
+  async getTotalExpensesLastMonth(@Request() req): Promise<number> {
+    const userId = req.user.sub;
+    return this.financialService.getTotalExpensesLastMonth(userId);
   }
 }
