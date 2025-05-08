@@ -8,6 +8,24 @@ import { FinancialService } from './financial.service';
 export class FinancialController {
   constructor(private readonly financialService: FinancialService) { }
 
+  @Get('/total')
+  async getTotalBalanceLastMonth(@Request() req): Promise<number> {
+    const userId = req.user.sub;
+    return this.financialService.getTotalBalanceLastMonth(userId);
+  }
+
+  @Get('/incomes')
+  async getTotalIncomesLastMonth(@Request() req): Promise<number> {
+    const userId = req.user.sub;
+    return this.financialService.getTotalIncomesLastMonth(userId);
+  }
+
+  @Get('/expenses')
+  async getTotalExpensesLastMonth(@Request() req): Promise<number> {
+    const userId = req.user.sub;
+    return this.financialService.getTotalExpensesLastMonth(userId);
+  }
+
   @Post()
   async create(@Request() req, @Body() createFinancialDto: CreateFinancialDto): Promise<CreateFinancialDto> {
     const userId = req.user?.sub;
@@ -36,23 +54,5 @@ export class FinancialController {
   remove(@Request() req, @Param('id') id: string) {
     const userId = req.user.sub;
     return this.financialService.remove(id, userId);
-  }
-
-  @Get('/total')
-  async getTotalBalanceLastMonth(@Request() req): Promise<number> {
-    const userId = req.user.sub;
-    return this.financialService.getTotalBalanceLastMonth(userId);
-  }
-
-  @Get('/revenues')
-  async getTotalRevenuesLastMonth(@Request() req): Promise<number> {
-    const userId = req.user.sub;
-    return this.financialService.getTotalRevenuesLastMonth(userId);
-  }
-
-  @Get('/expenses')
-  async getTotalExpensesLastMonth(@Request() req): Promise<number> {
-    const userId = req.user.sub;
-    return this.financialService.getTotalExpensesLastMonth(userId);
   }
 }

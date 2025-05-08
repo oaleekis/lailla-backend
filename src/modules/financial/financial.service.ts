@@ -127,12 +127,12 @@ export class FinancialService {
     return total;
   }
 
-  async getTotalRevenuesLastMonth(userId: string): Promise<number> {
+  async getTotalIncomesLastMonth(userId: string): Promise<number> {
     const today = new Date();
     const lastMonth = new Date();
     lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-    const revenues = await this.financialRepository.find({
+    const incomes = await this.financialRepository.find({
       where: {
         userId,
         type: PaymentTypeEnum.INCOME,
@@ -140,9 +140,9 @@ export class FinancialService {
       }
     });
 
-    const totalRevenues = revenues.reduce((acc, income) => acc + Number(income.amount), 0);
+    const totalIncomes = incomes.reduce((acc, income) => acc + Number(income.amount), 0);
 
-    return totalRevenues;
+    return totalIncomes;
   }
 
   async getTotalExpensesLastMonth(userId: string): Promise<number> {
