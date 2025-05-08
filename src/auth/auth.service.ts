@@ -15,8 +15,16 @@ export class AuthService {
         private readonly jwtService: JwtService, 
         private readonly configService: ConfigService
     ) { 
-        this.jwtExpirationTime = this.configService.get<string>('JWT_EXPIRATION_TIME') || '3600s';
-        this.jwtSecret = this.configService.get<string>('JWT_SECRET') || 'default-secret-key';
+        const jwtExpiration = this.configService.get<string>('JWT_EXPIRATION_TIME');
+        if(!jwtExpiration){
+            throw new Error('Jwt is not defined in the configuration');
+        }
+        const secret = this.configService.get<string>('JWT_SECRET');
+        if(!secret) {
+            throw new Error('JWT_SECRET is not defined in the configuration');
+        }
+        this.jwtExpirationTime = jwtExpiration;
+        this.jwtSecret = secret;
     }
 
     async signIn(email: string, password: string): Promise<AuthResponseDto> {

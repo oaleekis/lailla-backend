@@ -2,8 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCategoriesDto, FindAllParameters } from './dto/create-categories.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriesEntity } from 'src/db/entities/categories.entity';
-import { FindOptionsWhere, Repository, Like, Between } from 'typeorm';
-import { PaymentTypeEnum } from 'src/utils/enum/PaymentTypeEnum';
+import { FindOptionsWhere, Repository, Like } from 'typeorm';
 
 @Injectable()
 export class CategoriesService {

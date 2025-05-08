@@ -129,8 +129,8 @@ Este projeto é um backend simples desenvolvido com **NestJS**, utilizando **JWT
   {
     "categoryId": "id",
     "title": "title",
-    "value": "15915",
-    "type": "RECEITA", // ou "DESPESA"
+    "amount": "15915",
+    "type": "INCOME", // ou "EXPENSE"
     "date": "2023-10-01T00:00:00Z"
   }
 
@@ -155,8 +155,8 @@ Este projeto é um backend simples desenvolvido com **NestJS**, utilizando **JWT
   {
     "categoryId": "id",
     "title": "title",
-    "value": "15915",
-    "type": "RECEITA", // ou "DESPESA"
+    "amount": "15915",
+    "type": "INCOME", // ou "EXPENSE"
     "date": "2023-10-01T00:00:00Z"
   }
 

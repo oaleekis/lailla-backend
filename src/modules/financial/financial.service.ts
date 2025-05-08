@@ -19,7 +19,7 @@ export class FinancialService {
       userId: userId,
       categoryId: createFinancialDto.categoryId,
       title: createFinancialDto.title,
-      value: createFinancialDto.value,
+      amount: createFinancialDto.amount,
       date: createFinancialDto.date,
       type: createFinancialDto.type,
       createdAt: new Date().toISOString(),
@@ -117,10 +117,10 @@ export class FinancialService {
     });
 
     const total = financials.reduce((acc, financial) => {
-      if (financial.type === PaymentTypeEnum.RECEITA) {
-        return acc + Number(financial.value);
+      if (financial.type === PaymentTypeEnum.INCOME) {
+        return acc + Number(financial.amount);
       } else {
-        return acc - Number(financial.value);
+        return acc - Number(financial.amount);
       }
     }, 0);
 
@@ -135,12 +135,12 @@ export class FinancialService {
     const revenues = await this.financialRepository.find({
       where: {
         userId,
-        type: PaymentTypeEnum.RECEITA,
+        type: PaymentTypeEnum.INCOME,
         date: Between(lastMonth.toISOString(), today.toISOString()),
       }
     });
 
-    const totalRevenues = revenues.reduce((acc, receita) => acc + Number(receita.value), 0);
+    const totalRevenues = revenues.reduce((acc, income) => acc + Number(income.amount), 0);
 
     return totalRevenues;
   }
@@ -153,12 +153,12 @@ export class FinancialService {
     const expenses = await this.financialRepository.find({
       where: {
         userId,
-        type: PaymentTypeEnum.DESPESA,
+        type: PaymentTypeEnum.EXPENSE,
         date: Between(lastMonth.toISOString(), today.toISOString()),
       }
     });
 
-    const totalExpenses = expenses.reduce((acc, despesa) => acc + Number(despesa.value), 0);
+    const totalExpenses = expenses.reduce((acc, despesa) => acc + Number(despesa.amount), 0);
 
     return totalExpenses;
   }
@@ -169,7 +169,7 @@ export class FinancialService {
       userId: financialEntity.userId,
       categoryId: financialEntity.categoryId,
       title: financialEntity.title,
-      value: financialEntity.value,
+      amount: financialEntity.amount,
       date: financialEntity.date,
       type: financialEntity.type as PaymentTypeEnum,
       createdAt: financialEntity.createdAt,
@@ -184,7 +184,7 @@ export class FinancialService {
       categoryId: createFinancialDto.categoryId,
       title: createFinancialDto.title,
       date: createFinancialDto.date,
-      value: createFinancialDto.value,
+      amount: createFinancialDto.amount,
       type: createFinancialDto.type as PaymentTypeEnum,
       createdAt: createFinancialDto.createdAt,
       updatedAt: createFinancialDto.updatedAt,

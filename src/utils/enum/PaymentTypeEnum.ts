@@ -1,4 +1,4 @@
 export enum PaymentTypeEnum {
-    RECEITA = 'RECEITA',
-    DESPESA = 'DESPESA',
+    INCOME = 'INCOME',
+    EXPENSE = 'EXPENSE',
 }

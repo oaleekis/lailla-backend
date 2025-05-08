@@ -27,7 +27,7 @@ export class FinancialEntity {
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   @IsString()
-  value: string;
+  amount: string;
 
   @Column({ type: 'enum', enum: PaymentTypeEnum })
   @IsEnum(PaymentTypeEnum)

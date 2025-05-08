@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsString, IsUUID, IsOptional, IsDateString, MinLength, MaxLength, IsEnum } from 'class-validator';
 import { PaymentTypeEnum } from 'src/utils/enum/PaymentTypeEnum';
 
@@ -35,9 +36,10 @@ export class CreateFinancialDto {
   title: string;
 
   @IsString()
-  value: string;
+  amount: string;
 
-  @IsEnum(PaymentTypeEnum, { message: 'paymentType must be receita or despesa' })
+  @Transform(({ value }) => value?.toUpperCase())
+  @IsEnum(PaymentTypeEnum, { message: 'paymentType must be income or expense' })
   type: PaymentTypeEnum;
 
   @IsDateString()
