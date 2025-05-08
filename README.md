@@ -14,7 +14,7 @@ Este projeto é um backend simples desenvolvido com **NestJS**, utilizando **JWT
 
 ### Pré-requisitos
 
-- **Node.js**
+- **Node.js V20+**
 - **Postgre**
 - **TypeORM**
 
