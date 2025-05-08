@@ -37,10 +37,9 @@ Este projeto é um backend simples desenvolvido com **NestJS**, utilizando **JWT
     DB_PORT=
     DB_USERNAME=
     DB_PASSWORD=
-    DB_DATABASE=
-    JWT_SECRET= 
-    JWT_EXPIRATION_TIME= 
-    JWT_SECRET= 123456
+    DB_DATABASE=sua_database
+    JWT_SECRET=sua_secret
+    JWT_EXPIRATION_TIME='1h'
     DB_SSL=false
     ```
 
