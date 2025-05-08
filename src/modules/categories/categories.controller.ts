@@ -17,7 +17,7 @@ export class CategoriesController {
   @Get()
   async findAll(@Request() req, @Query() params: FindAllParameters): Promise<{ items: CreateCategoriesDto[], totalItems: number }> {
     const userId = req.user.sub;
-    return this.categoriesService.findAll({ ...params, userId });
+    return this.categoriesService.findAll({ ...params }, userId);
   }
 
   @Get('/:id')

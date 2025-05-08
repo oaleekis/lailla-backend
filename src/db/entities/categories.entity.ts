@@ -9,9 +9,10 @@ export class CategoriesEntity {
   @IsOptional()
   id?: string;
   
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
   @IsString()
-  userId: string;
+  @IsOptional()
+  userId?: string | null;
 
   @Column({ type: 'varchar', length: 256 })
   @IsString()

@@ -48,8 +48,12 @@ Este projeto é um backend simples desenvolvido com **NestJS**, utilizando **JWT
     ```bash
     npm run migration:run
     ```
+5. **Execute as seeds** para ter categorias padrões.
+    ```bash
+    npm run seed:categories
+    ```
 
-5. **Inicie o servidor**:
+6. **Inicie o servidor**:
     ```bash
     npm run start
     ```

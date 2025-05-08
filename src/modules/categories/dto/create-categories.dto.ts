@@ -19,9 +19,9 @@ export class CreateCategoriesDto {
   @IsOptional()
   id?: string;
 
-  @IsUUID()
+  @IsString()
   @IsOptional()
-  userId?: string;
+  userId?: string | null;
 
   @IsString()
   @MinLength(3)

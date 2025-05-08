@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCategoriesDto, FindAllParameters } from './dto/create-categories.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriesEntity } from 'src/db/entities/categories.entity';
-import { FindOptionsWhere, Repository, Like } from 'typeorm';
+import { FindOptionsWhere, Repository, Brackets, Like } from 'typeorm';
 
 @Injectable()
 export class CategoriesService {
@@ -40,31 +40,21 @@ export class CategoriesService {
     return this.mapEntityToDto(foundCategories);
   }
 
-  async findAll(params: FindAllParameters): Promise<{ items: CreateCategoriesDto[], totalItems: number }> {
-    const searchParams: FindOptionsWhere<CategoriesEntity> = {}
-
-    if (params.name) {
-      searchParams.name = Like(`%${params.name}%`);
-    }
-
-    searchParams.userId = params.userId;
-
-    const page = params.page || 1;
-    const pageSize = params.pageSize || 5;
-
+  async findAll(params: FindAllParameters, userId): Promise<{ items: CreateCategoriesDto[]; totalItems: number }> {
+    const { page = 1, pageSize = 5 } = params;
+  
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
-
-    const [categoriesFound, totalItems] = await this.categoriesRepository.findAndCount({
-      where: searchParams,
-      skip,
-      take
-    });
-  
-     const items = categoriesFound.map(categoriesEntity => this.mapEntityToDto(categoriesEntity));
-
-     return { items, totalItems };
+    const queryBuilder = this.categoriesRepository.createQueryBuilder('categories');
+    queryBuilder.where(new Brackets(qb => {
+      qb.where('categories.userId = :userId', { userId }).orWhere('categories.userId IS NULL');
+    }));
+    queryBuilder.skip(skip).take(take).orderBy('categories.name', 'ASC');
+    
+    const [categoriesFound, totalItems] = await queryBuilder.getManyAndCount();
+    const items = categoriesFound.map(c => this.mapEntityToDto(c));
+    return { items, totalItems };
   }
 
   async update(id: string, createCategoriesDto: CreateCategoriesDto, userId: string) {
