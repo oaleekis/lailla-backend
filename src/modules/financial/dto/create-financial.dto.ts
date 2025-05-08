@@ -30,6 +30,8 @@ export class CreateFinancialDto {
   @IsUUID()
   categoryId: string;
 
+  categoryName?: string;
+
   @IsString()
   @MinLength(3)
   @MaxLength(256)

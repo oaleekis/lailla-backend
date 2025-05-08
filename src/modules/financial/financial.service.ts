@@ -64,13 +64,21 @@ export class FinancialService {
 
     const [financialFound, totalItems] = await this.financialRepository.findAndCount({
       where: searchParams,
+      relations: ['category'],
       skip,
       take
     });
 
-    const items = financialFound.map(financialEntity => this.mapEntityToDto(financialEntity));
-
-    return { items, totalItems };
+  return {
+    items: financialFound.map(financial => {
+     const financialDto = this.mapEntityToDto(financial);
+     if (financial.category) {
+      financialDto.categoryName = financial.category.name;      
+     }
+     return financialDto;
+    }),
+    totalItems
+  };
   }
 
   async update(id: string, createFinancialDto: CreateFinancialDto, userId: string) {

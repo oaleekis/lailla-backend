@@ -7,7 +7,7 @@ export class FinancialTable1746489184651 implements MigrationInterface {
             CREATE TABLE "financials" (
               "id" UUID NOT NULL DEFAULT gen_random_uuid(),
               "userId" UUID NOT NULL,
-              "categoryId" UUID NULL,
+              "categoryId" UUID NOT NULL,
               "title" VARCHAR(255) NOT NULL,
               "amount" VARCHAR(255) NOT NULL,
               "type" VARCHAR(10) NOT NULL CHECK ("type" IN ('INCOME', 'EXPENSE')),

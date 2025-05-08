@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { IsString, IsUUID, IsDateString, IsOptional, MinLength, MaxLength, IsEnum } from 'class-validator';
 import { PaymentTypeEnum } from '../../utils/enum/PaymentTypeEnum';
+import { CategoriesEntity } from './categories.entity';
 
 
 @Entity('financials')
@@ -15,9 +16,14 @@ export class FinancialEntity {
   @IsString()
   userId: string;
 
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'uuid'})
   @IsString()
   categoryId: string;
+
+  @ManyToOne(() => CategoriesEntity)
+  @JoinColumn({ name: 'categoryId' })
+  category?: CategoriesEntity
+
 
   @Column({ type: 'varchar', length: 256 })
   @IsString()
