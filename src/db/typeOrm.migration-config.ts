@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { UserEntity } from 'src/db/entities/user.entity';
 import { FinancialEntity } from './entities/financial.entity';
+import { CategoriesEntity } from './entities/categories.entity';
 
 
 config();
@@ -16,7 +17,7 @@ const dataSourceOptions: DataSourceOptions = {
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
-  entities: [UserEntity, FinancialEntity],
+  entities: [UserEntity, FinancialEntity, CategoriesEntity],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
   synchronize: false,
   ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
